@@ -15,6 +15,7 @@
 
     String checkId = "test";
     String checkpass = "1111";
+
     if(id.equals(checkId) && pass.equals(checkpass)){
         session.setAttribute("id",id);
         response.sendRedirect("../index.jsp");
