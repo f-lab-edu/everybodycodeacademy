@@ -7,11 +7,8 @@ target/
 *.iws
 *.iml
 *.ipr
-<<<<<<< HEAD
 .idea/
-=======
-.idea/*
->>>>>>> eabff1f9ae050ef147d927334860c766d29ec008
+
 
 ### Eclipse ###
 .apt_generated
