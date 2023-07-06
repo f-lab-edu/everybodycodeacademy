@@ -13,8 +13,9 @@
     String id = request.getParameter("id");
     String pass = request.getParameter("pass");
 
-    String checkId = "moneyfire";
-    String checkpass = "15412258";
+    String checkId = "test";
+    String checkpass = "1111";
+
     if(id.equals(checkId) && pass.equals(checkpass)){
         session.setAttribute("id",id);
         response.sendRedirect("../index.jsp");
