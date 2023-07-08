@@ -22,9 +22,9 @@ public class SecurityConfiguration {
   @Bean
   public InMemoryUserDetailsManager userDetailsService() {
     UserDetails admin =
-            User.builder().username("admin").password("admin").roles("ADMIN").build();//admin
+        User.builder().username("admin").password("admin").roles("ADMIN").build(); // admin
     UserDetails user =
-            User.builder().username("test").password("test").roles("USER").build();//user
+        User.builder().username("test").password("test").roles("USER").build(); // user
     return new InMemoryUserDetailsManager(admin, user);
   }
 }
