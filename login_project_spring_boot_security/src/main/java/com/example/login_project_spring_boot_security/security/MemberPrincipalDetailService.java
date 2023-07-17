@@ -1,7 +1,7 @@
 package com.example.login_project_spring_boot_security.security;
 
 
-import com.example.login_project_spring_boot_security.member.entity.Member;;
+import com.example.login_project_spring_boot_security.member.entity.Member;
 import com.example.login_project_spring_boot_security.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

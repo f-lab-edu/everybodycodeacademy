@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
   @RequestMapping(value = "/member/main")
-  public String Main(Model model, Member member) {
+  public String Main() {
 
     return "main/main";
   }
