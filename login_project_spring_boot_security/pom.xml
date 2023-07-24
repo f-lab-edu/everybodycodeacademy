@@ -73,7 +73,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.example.login_project_spring_boot_security.LoginProjectSpringBootSecurityApplication</mainClass>  <!-- 여기에 메인 클래스를 지정합니다. -->
+                    <mainClass>
+                        com.example.login_project_spring_boot_security.LoginProjectSpringBootSecurityApplication
+                    </mainClass>
                 </configuration>
             </plugin>
         </plugins>
