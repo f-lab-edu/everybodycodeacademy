@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.example.login_project_spring_boot_security.LoginProjectS
+ pringBootSecurityApplication
+

@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>login_project_spring_boot_security</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>ROOT</artifactId>
+    <version>1.0.0</version>
     <packaging>war</packaging>
     <name>login_project_spring_boot_security</name>
     <description>login_project_spring_boot_security</description>
@@ -60,6 +60,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>  <!-- 적절한 버전을 선택하세요. -->
         </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -67,6 +72,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.login_project_spring_boot_security.LoginProjectSpringBootSecurityApplication</mainClass>  <!-- 여기에 메인 클래스를 지정합니다. -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
