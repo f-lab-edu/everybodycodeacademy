@@ -13,8 +13,8 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void register(Board board) {
-        boardRepository.save(board);
+    public Board register(Board board) {
+       return boardRepository.save(board);
     }
 
     public List<Board> list() {
@@ -25,8 +25,9 @@ public class BoardService {
         return boardRepository.findById(idx).orElse(null);
     }
 
-    public void update(Board board) {
+    public Board update(Board board) {
         boardRepository.save(board);
+        return board;
     }
 
     public void delete(int idx) {

@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Getter
@@ -27,9 +28,11 @@ public class Board {
 
     @CreationTimestamp
     @Column(updatable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
 
     @UpdateTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modDate;
 
 
