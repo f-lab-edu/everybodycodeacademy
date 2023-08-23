@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  database:
+    container_name: everydb
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: testtest1234
+      MYSQL_DATABASE: codeacademy
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - every_network
+
+  application:
+    container_name: everycodeacedemy
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://everydb:3306/codeacademy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: testtest1234
+    depends_on:
+      - database
+    networks:
+      - every_network
+
+networks:
+  every_network:
+
+volumes:
+  mysql-data:
