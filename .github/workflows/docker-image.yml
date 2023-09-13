@@ -2,9 +2,12 @@ name: Docker Image CICD
 
 on:
   push:
-    branches: [ "everycodeacademy_cicd", "everycodeacademy" ]
+    branches:
+      - 'everycodeacademy_cicd'
+      - 'everycodeacademy'
   pull_request:
-    branches: [ "main" ]
+    branches: 
+      - 'main'
 
 jobs:
 
