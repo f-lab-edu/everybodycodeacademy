@@ -6,6 +6,10 @@ on:
     branches: 
       - main
       - everycodeacademy_cicd
+      
+permissions:
+  contents: read
+  
 jobs:
   CI-CD:
     runs-on: ubuntu-latest
