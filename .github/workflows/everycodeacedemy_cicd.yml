@@ -6,14 +6,6 @@ on:
     branches: 
       - main
       - everycodeacademy_cicd
-env:
-  # docker hub의 organization 이름
-  REGISTRY: "xenex90"
-  # build and push 할 docker image 이름
-  IMAGE_NAME: "everycodeacademy"
-  # build and push 할 docker image의 tag
-  TAG: "latest"
-  
 jobs:
   CI-CD:
     runs-on: ubuntu-latest
