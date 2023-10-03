@@ -21,9 +21,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # gradle build
+
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew clean build -x test
 
       - name: Login to DockerHub
         run: |
