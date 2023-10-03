@@ -2,11 +2,11 @@ name: Docker Image CICD
 
 on:
   push:
-    branches: "everycodeacademy"
+    branches: everycodeacademy
   pull_request:
     branches: 
-      - "main"
-      - "everycodeacademy_cicd"
+      - main
+      - everycodeacademy_cicd
 
 env:
   # docker hub의 organization 이름
