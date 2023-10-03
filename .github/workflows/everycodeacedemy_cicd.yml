@@ -12,7 +12,7 @@ env:
   # build and push 할 docker image 이름
   IMAGE_NAME: "everycodeacademy"
   # build and push 할 docker image의 tag
-  TAG: latest
+  TAG: "latest"
   
 jobs:
 
