@@ -8,6 +8,9 @@ permissions:
 jobs:
   test:
       runs-on: ubuntu-latest
+      defaults:
+          run:
+            working-directory: ./everycodeacademy
 
       steps:
         - uses: actions/checkout@v3.6.0
@@ -23,11 +26,16 @@ jobs:
           with:
             arguments: build
             build-root-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy
+
+        - name: Grant execute permission for gradlew
+          run: chmod +x gradlew
           
         - name: Build with Gradle
-          run: |
-              cd /home/runner/work/everybodycodeacademy/everybodycodeacademy 
-              ./gradlew clean build -x test
+          run: ./gradlew clean build -x test
+         
+
+          
+              
           
 
         - name: Set up Docker Buildx
