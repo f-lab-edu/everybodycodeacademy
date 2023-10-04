@@ -42,8 +42,12 @@ jobs:
 
         - name: checkfiles
           run: ls -l
-               cd everybodycodeacademy
-               ls -l
+
+        - name: change dir
+          run: cd everybodycodeacademy
+          
+        - name: checkfiles
+          run: ls -l
           
         - name: Build and push
           uses: docker/build-push-action@v5
