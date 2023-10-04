@@ -27,7 +27,8 @@ jobs:
             cache-overwrite-existing: true
           
         - name: Build with Gradle
-          run: ./gradlew clean build -x test
+          run: pwd
+               ./gradlew clean build -x test
           
 
         - name: Set up Docker Buildx
