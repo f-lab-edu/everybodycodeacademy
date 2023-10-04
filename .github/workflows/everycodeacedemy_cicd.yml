@@ -22,8 +22,7 @@ jobs:
           uses: gradle/gradle-build-action@v2.9.0
           
         - name: Build with Gradle
-          run: pwd
-               ./gradlew clean build -x test
+          run: ./gradlew clean build -x test
           
 
         - name: Set up Docker Buildx
