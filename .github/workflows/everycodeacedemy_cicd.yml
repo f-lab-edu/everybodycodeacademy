@@ -44,7 +44,7 @@ jobs:
           run: ls -l
 
         - name: change dir
-          run: cd everybodycodeacademy
+          run: cd /home/runner/work/everybodycodeacademy/everybodycodeacademy
           
         - name: checkfiles
           run: ls -l
