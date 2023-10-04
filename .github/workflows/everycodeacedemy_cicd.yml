@@ -48,7 +48,11 @@ jobs:
           run: ls -l
 
         - name: change dir
-          run: cd /home/runner/work/everybodycodeacademy/everybodycodeacademy
+          run: |
+            pwd
+            ls -l
+          
+          
           
         - name: checkfiles
           run: ls -l
