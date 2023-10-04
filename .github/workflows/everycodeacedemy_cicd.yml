@@ -1,12 +1,6 @@
 name: Docker Image CICD
 on:
-  push:
-    branches: 
-    - everycodeacademy
-  pull_request:
-    branches: 
-    - main
-    - everycodeacademy_cicd
+  workflow_dispatch:
       
 permissions:
   contents: read
