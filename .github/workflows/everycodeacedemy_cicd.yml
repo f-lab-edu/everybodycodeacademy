@@ -22,7 +22,9 @@ jobs:
           uses: gradle/gradle-build-action@v2.9.0
           
         - name: Build with Gradle
-          run: ./home/runner/work/everybodycodeacademy/everybodycodeacademy/gradlew clean build -x test
+          run: |
+              cd /home/runner/work/everybodycodeacademy/everybodycodeacademy 
+              ./gradlew clean build -x test
           
 
         - name: Set up Docker Buildx
