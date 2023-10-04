@@ -23,8 +23,6 @@ jobs:
        
         - name: Setup Gradle
           uses: gradle/gradle-build-action@v2.9.0
-          with:
-            cache-overwrite-existing: true
           
         - name: Build with Gradle
           run: pwd
@@ -52,5 +50,6 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@v5
           with:
+            context: "{{defaultContext}}:${{ secrets.DOCKER_REPO }}"
             push: true
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
