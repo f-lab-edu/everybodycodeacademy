@@ -1,6 +1,12 @@
 name: Docker Image CICD
+
 on:
-  workflow_dispatch:
+  push:
+    branches: "everycodeacademy"
+  pull_request:
+    branches: 
+      - "main"
+      - "everycodeacademy_cicd"
   
 jobs:
   test:
