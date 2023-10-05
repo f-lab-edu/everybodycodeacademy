@@ -28,7 +28,7 @@ jobs:
           
         - name: Build with Gradle
           run: | 
-            cd /home/runner/work/everybodycodeacademy/everybodycodeacademy/everybodycodeacademy
+            cd /home/runner/work/everybodycodeacademy/everybodycodeacademy
             ./gradlew --build-cache -x test
             pwd
             ls -l
