@@ -42,7 +42,7 @@ jobs:
         - name: Grant execute permission
           working-directory: ./build/lib
           run: 
-           sudo chmod 775 everycodeacademy-0.0.1-SNAPSHOT.jar
+           sudo chmod 775 /home/runner/work/everybodycodeacademy/everybodycodeacademy/everycodeacademy/everycodeacademy-0.0.1-SNAPSHOT.jar
 
         - name: Docker build & push
           working-directory: ${{ env.working-directory }}
