@@ -5,6 +5,8 @@ on:
 jobs:
   test:
       runs-on: ubuntu-latest
+      env: 
+         working-directory: ./everycodeacademy
 
       steps:
         - uses: actions/checkout@v3
@@ -15,7 +17,7 @@ jobs:
             distribution: 'corretto'
           
         - name: Build with Gradle
-          working-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy/everycodeacademy
+          working-directory: ${{ env.working-directory }}
           run: |
             ./gradlew --build-cache -x test
             pwd
@@ -36,15 +38,15 @@ jobs:
           run: ls
 
         - name: Grant execute permission
-          working-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy/everycodeacademy
+          working-directory: ${{ env.working-directory }}/build/lib
           run: 
            sudo chmod 775 everycodeacademy-0.0.1-SNAPSHOT.jar
 
         - name: Docker build & push
-          working-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy/everycodeacademy
+          working-directory: ${{ env.working-directory }}
           run: |
            pwd
            ls -l
            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-           sudo docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} .
+           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} .
            docker push ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
