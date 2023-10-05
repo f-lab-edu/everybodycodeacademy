@@ -60,6 +60,6 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@v5
           with:
-            context: "{{defaultContext}}:${{ secrets.DOCKER_REPO }}"
+            file: .
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO }}
