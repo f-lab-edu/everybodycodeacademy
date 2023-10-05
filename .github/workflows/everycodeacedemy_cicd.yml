@@ -1,9 +1,6 @@
 name: Docker Image CICD
 on:
   workflow_dispatch:
-      
-permissions:
-  contents: read
   
 jobs:
   test:
