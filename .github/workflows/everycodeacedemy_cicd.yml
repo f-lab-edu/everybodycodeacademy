@@ -19,7 +19,7 @@ jobs:
         - name: Build with Gradle
           working-directory: ${{ env.working-directory }}
           run: |
-            ./gradlew cleab build -x test
+            ./gradlew clean build -x test
             pwd
             ls
           
