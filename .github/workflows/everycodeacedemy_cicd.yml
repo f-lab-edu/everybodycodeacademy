@@ -37,6 +37,13 @@ jobs:
         - name: checkfiles
           run: ls
 
+        - name: Grant execute permission for docker
+          run: chmod +x docker
+
+        - name: Grant execute permission for docker
+          working-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy/everycodeacademy/build/lib
+          run: sudo chmod 775 everycodeacademy-0.0.1-SNAPSHOT.jar
+
         - name: Docker build & push
           working-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy/everycodeacademy
           run: |
