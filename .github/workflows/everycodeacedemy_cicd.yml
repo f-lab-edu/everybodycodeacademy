@@ -29,17 +29,6 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-        - name: change dir
-          working-directory: /home/runner/work/everybodycodeacademy/everybodycodeacademy/build/lib
-          run: |
-            pwd
-            ls -l
-            
-        - name: checkfiles
-          working-directory: ${{ env.working-directory }}
-          run: ls
-
-
         - name: Docker build & push
           working-directory: ${{ env.working-directory }}
           run: |
