@@ -29,12 +29,6 @@ jobs:
         - name: Build with Gradle
           run: ./gradlew --build-cache -x test
           
-        - name: Cache PhysicalTheraphy build directory
-          uses: actions/cache@v3
-          with:
-            path: ./
-            key: ${{ runner.os }}-physicaltheraphy-build-cache-${{ steps.short-sha.outputs.sha }}
-          
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
           
@@ -52,15 +46,8 @@ jobs:
         - name: checkfiles
           run: ls -l
 
-        - name: Restore Gradle cache directory
-          uses: actions/cache@v3
-          with:
-            path: ./
-            key: ${{ runner.os }}-physicaltheraphy-build-cache-${{ steps.short-sha.outputs.sha }}
-
-        - name: Build and push
-          uses: docker/build-push-action@v5
-          with:
-            context: "{{defaultContext}}:${{ secrets.DOCKER_REPO }}"
-            push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO }}
+        - name: Docker build & push
+          run: |
+           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} .
+           docker push ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
