@@ -34,7 +34,9 @@ jobs:
         - name: copy scouter.conf
           working-directory: ${{ env.working-directory }}/agent.java/conf
           run:            
-            echo "${{ env.SCOUTER_AGENT_JAVA_CONF }}" >> scounter.conf
+            echo "$scounter.conf" >> scounter.conf
+          env:
+            scounter.conf: ${{ env.SCOUTER_AGENT_JAVA_CONF }}
         
             
           
