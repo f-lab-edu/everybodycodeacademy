@@ -23,6 +23,20 @@ jobs:
             ./gradlew clean build -x test
             pwd
             ls
+
+
+        - name: download scouter jar
+          working-directory: ${{ env.working-directory }}
+          run: |
+            wget https://github.com/scouter-project/scouter/releases/download/v2.20.0/scouter-min-2.20.0.tar.gz
+            tar -zxvf scouter-min-2.20.0.tar.gz
+
+        - name: copy scouter.conf
+          working-directory: ${{ env.working-directory }}/agent.java/conf
+          run:            
+            echo "${{env.SCOUTER_AGENT_JAVA_CONF}}" >> ./sciyter.conf
+        
+            
           
         - name: Login to Docker Hub
           uses: docker/login-action@v3
