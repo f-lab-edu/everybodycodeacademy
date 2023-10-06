@@ -8,6 +8,8 @@ jobs:
       runs-on: ubuntu-latest
       env: 
          working-directory: ./everycodeacademy
+         working-directory2: ./everycodeacademy
+         scounter.conf: ${{ env.SCOUTER_AGENT_JAVA_CONF }}
 
       steps:
         - uses: actions/checkout@v3
@@ -32,11 +34,11 @@ jobs:
             tar -zxvf scouter-min-2.20.0.tar.gz
 
         - name: copy scouter.conf
-          working-directory: ${{ env.working-directory }}/agent.java/conf
+          working-directory: ${{ env.working-directory2 }}
           run:            
-            echo "$scounter.conf" >> scounter.conf
-          env:
-            scounter.conf: ${{ env.SCOUTER_AGENT_JAVA_CONF }}
+            echo "${{ env.scounter.conf }}" >> scounter.conf
+
+            
         
             
           
