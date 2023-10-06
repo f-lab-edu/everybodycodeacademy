@@ -66,8 +66,7 @@ jobs:
             port: 22
             key: ${{ secrets.AWS_EC2_KEY }}
             script: |
-              sudo docker login
-              sudo docker ps
-              sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
-              sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
-              sudo docker image prune -f
+              docker ps
+              docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              docker image prune -f
