@@ -9,7 +9,7 @@ jobs:
       env: 
          working-directory: ./everycodeacademy
          working-directory2: ./everycodeacademy
-         scounter.conf: ${{ env.SCOUTER_AGENT_JAVA_CONF }}
+         scounter.conf: ${{ secrets.SCOUTER_AGENT_JAVA_CONF }}
 
       steps:
         - uses: actions/checkout@v3
