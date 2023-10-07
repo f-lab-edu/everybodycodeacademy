@@ -82,11 +82,11 @@ jobs:
             port: 22
             key: ${{ secrets.AWS_EC2_KEY }}
             script: |
-              docker ps
-              docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
-              docker stop everycodeacedemy
+              sudo docker ps
+              sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              sudo docker stop everycodeacedemy
               sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
-              docker image prune -f
+              sudo docker image prune -f
 
         - name: Deploy to ec2-3
           uses: appleboy/ssh-action@master
@@ -97,8 +97,8 @@ jobs:
             port: 22
             key: ${{ secrets.AWS_EC2_KEY }}
             script: |
-              docker ps
-              docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
-              docker stop everycodeacedemy
+              sudo docker ps
+              sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              sudo docker stop everycodeacedemy
               sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
-              docker image prune -f
+              sudo docker image prune -f
