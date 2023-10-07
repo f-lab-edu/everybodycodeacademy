@@ -69,5 +69,5 @@ jobs:
               docker ps
               docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               docker stop everycodeacedemy
-              docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               docker image prune -f
