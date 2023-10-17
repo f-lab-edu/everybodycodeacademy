@@ -69,7 +69,7 @@ jobs:
               docker ps
               docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               docker stop everycodeacedemy
-              sudo docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} nohup
+              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               docker image prune -f
 
 
@@ -85,7 +85,7 @@ jobs:
               sudo docker ps
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               sudo docker stop everycodeacedemy
-              sudo docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} nohup
+              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               sudo docker image prune -f
 
         - name: Deploy to ec2-3
@@ -100,5 +100,5 @@ jobs:
               sudo docker ps
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               sudo docker stop everycodeacedemy
-              sudo docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} nohup
+              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               sudo docker image prune -f
