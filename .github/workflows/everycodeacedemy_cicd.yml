@@ -69,7 +69,7 @@ jobs:
               docker ps
               docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               docker stop everycodeacedemy
-              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
+              sudo nohup docker run -d -it -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               docker image prune -f
 
 
