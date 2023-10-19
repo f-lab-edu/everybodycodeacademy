@@ -35,8 +35,9 @@ jobs:
 
         - name: copy scouter.conf
           working-directory: ${{ env.working-directory2 }}
-          run:            
-            echo "${{env.scounter-conf}}" >> scouter.conf
+          run: |
+            touch scouter.conf
+            echo "${{env.scounter-conf}}" > scouter.conf
 
             
         
