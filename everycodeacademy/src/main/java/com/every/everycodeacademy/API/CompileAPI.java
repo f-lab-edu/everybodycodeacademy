@@ -3,37 +3,34 @@ package com.every.everycodeacademy.API;
 import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
 import java.io.BufferedWriter;
-import java.net.MalformedURLException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
-
-import java.io.FileWriter;
-import java.io.IOException;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/complie")
 public class CompileAPI {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Autowired JavaCompileService javaCompileService;
 
   @RequestMapping("/java")
   public void getJavaStringToCompile(@RequestBody JavaCompile javaCompile) {
-
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
     String filePath = "webCompile.java";
 
-    // javaCompile.setJavaBodyString("hihi1231231231");
-    // javaCompile.setParameterString("args");
     javaCompile.setJavaFullCompile(
         "public class webCompile { public static String main(String[] "
             + javaCompile.getParameterString()
@@ -47,7 +44,7 @@ public class CompileAPI {
       writer.write(javaCompile.getJavaFullCompile());
       System.out.println("소스 코드가 " + filePath + "에 저장되었습니다.");
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
 
     // 3. 컴파일 옵션 설정
@@ -65,26 +62,35 @@ public class CompileAPI {
       int compilationResult = webCompiler.run(null, null, null, compileArguments);
 
       if (compilationResult == 0) {
-        System.out.println("컴파일이 성공적으로 완료되었습니다.");
+        logger.info("logger info = {}", "컴파일 성공");
       } else {
-        System.out.println("컴파일 중 오류가 발생하였습니다.");
+        logger.error("logger error = {}", "컴파일 중 오류가 발생하였습니다.");
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
 
     try {
-      System.out.println(javaCompileService.runCompiledFile()); // 컴파일된 파일 실행
-    } catch (ClassNotFoundException | MalformedURLException e) {
+      javaCompileService.runCompiledFile(); // 컴파일된 파일 실행
+      logger.info(javaCompileService.runCompiledFile());
+    } catch (Exception e) {
+      logger.error("logger error = {}", "컴파일 실행 실패");
+      logger.error("logger error = {}", e.getMessage());
       throw new RuntimeException(e);
     }
 
-    // 삭제 위해 파일 권한 변경
-    javaCompileService.changeClassFilePermissions();
-    javaCompileService.changeClassFilePermissions();
+    try {
+      javaCompileService.changeClassNJavaFilePermissions();
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    //
 
     // 실행에 필요했던 파일들 삭제
-    javaCompileService.deleteJavaFile();
-    javaCompileService.deleteClassFile();
+    try {
+      javaCompileService.deleteClassNJavaFile();
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
   }
 }

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@ApiResponses({
-  @ApiResponse(responseCode = "200", description = "success"),
-  @ApiResponse(responseCode = "400", description = "bad request"),
-  @ApiResponse(responseCode = "404", description = "not found"),
-  @ApiResponse(responseCode = "500", description = "internal sever error")
-})
+//@ApiResponses({
+//  @ApiResponse(responseCode = "200", description = "성공"),
+//  @ApiResponse(responseCode = "400", description = "bad request"),
+//  @ApiResponse(responseCode = "404", description = "not found"),
+//  @ApiResponse(responseCode = "500", description = "internal sever error")
+//})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/board")

@@ -38,9 +38,7 @@ public class MakeRunRaceTest {
           () -> {
             try {
               latch.await(); // 모든 스레드가 latch를 기다림
-              //              Concurrency concurrency = new Concurrency(); // id에 해당하는 데이터를 가져옵니다.
               concurrencyService.incrementCount(1L);
-
             } catch (InterruptedException e) {
               Thread.currentThread().interrupt();
             }
@@ -50,10 +48,10 @@ public class MakeRunRaceTest {
     // 모든 스레드를 동시에 시작
     latch.countDown();
 
-    // 모든 스레드가 완료될 때까지 대기
+    // 스레드 종료 시작
     service.shutdown();
 
-    while (!service.isTerminated()) {
+    while (!service.isTerminated()) { // 완전히 종료되지 않았다면
       try {
         Thread.sleep(100); // 100ms 대기
       } catch (InterruptedException e) {

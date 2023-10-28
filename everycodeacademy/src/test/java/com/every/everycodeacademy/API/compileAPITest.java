@@ -1,19 +1,31 @@
 package com.every.everycodeacademy.API;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.every.everycodeacademy.compile.JavaCompile;
-import java.io.File;
+import com.every.everycodeacademy.compile.JavaCompileService;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import javax.tools.JavaCompiler;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CompileAPITest {
-
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
   @InjectMocks private CompileAPI compileAPI;
+  @InjectMocks private JavaCompile javaCompile;
+
+  @InjectMocks JavaCompileService javaCompileService;
 
   @BeforeEach
   void setUp() {
@@ -22,11 +34,14 @@ class CompileAPITest {
 
   @Test
   void getJavaStringToCompileTest() {
-    // 테스트할 Java 코드
-    JavaCompile javaCompile = new JavaCompile();
+    JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
-    javaCompile.setJavaBodyString("hihi1231231231");
+    String filePath = "webCompile.java";
     javaCompile.setParameterString("args");
+
+    javaCompile.setJavaBodyString("good after noon");
+    assertNotNull(javaCompile.getJavaBodyString());
+
     javaCompile.setJavaFullCompile(
         "public class webCompile { public static String main(String[] "
             + javaCompile.getParameterString()
@@ -36,16 +51,55 @@ class CompileAPITest {
             + "\""
             + "; }}");
 
-    // 테스트 실행
-    compileAPI.getJavaStringToCompile(javaCompile);
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+      writer.write(javaCompile.getJavaFullCompile());
+      System.out.println("소스 코드가 " + filePath + "에 저장되었습니다.");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
-    // 결과 검증 (여기서는 예시로 파일 존재 여부만 확인합니다)
-    // 실제 상황에 따라 더 복잡한 검증 로직을 추가할 수 있습니다.
-    File file = new File("webCompile.java");
-    assertTrue(file.exists());
+    // 3. 컴파일 옵션 설정
+    Iterable<String> options = Arrays.asList("-d", "compiled");
 
-    // 컴파일된 파일이 생성되었는지 검사
-    File compiledFile = new File("webCompile.class");
-    assertTrue(compiledFile.exists());
+    // 4. 컴파일 수행
+    try (StandardJavaFileManager fileManager =
+        webCompiler.getStandardFileManager(null, null, null)) {
+      String fileName = "webCompile.java";
+
+      // 컴파일할 파일 지정
+      String[] compileArguments = {fileName};
+
+      // 컴파일 실행
+      int compilationResult = webCompiler.run(null, null, null, compileArguments);
+
+      if (compilationResult == 0) {
+        logger.info("logger info = {}", "컴파일 성공");
+      } else {
+        logger.error("logger error = {}", "컴파일 중 오류가 발생하였습니다.");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    try {
+      assertNotNull(javaCompileService.runCompiledFile()); // 컴파일된 파일 실행
+      logger.info(javaCompileService.runCompiledFile());
+    } catch (Exception e) {
+      logger.error("logger error = {}", "컴파일 실행 실패");
+      logger.error("logger error = {}", e.getMessage());
+      throw new RuntimeException(e);
+    }
+
+    try {
+      assertTrue(javaCompileService.changeClassNJavaFilePermissions());
+    } catch (Exception e) {
+      e.printStackTrace();
+      logger.error(e.getMessage());
+    }
+    //
+
+    // 실행에 필요했던 파일들 삭제
+    assertTrue(javaCompileService.deleteJavaFile());
+    assertTrue(javaCompileService.deleteClassFile());
   }
 }
