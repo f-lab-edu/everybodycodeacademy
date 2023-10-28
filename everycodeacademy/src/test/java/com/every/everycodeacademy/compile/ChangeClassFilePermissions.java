@@ -1,12 +1,10 @@
 package com.every.everycodeacademy.compile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
-import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

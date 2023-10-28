@@ -22,7 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CompileAPITest {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
-  @InjectMocks private CompileAPI compileAPI;
+
   @InjectMocks private JavaCompile javaCompile;
 
   @InjectMocks JavaCompileService javaCompileService;
