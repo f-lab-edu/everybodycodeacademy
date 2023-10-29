@@ -1,5 +1,6 @@
 package com.every.everycodeacademy.compile;
 
+import com.every.everycodeacademy.constant.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -22,10 +23,8 @@ public class JavaCompileService {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public boolean deleteJavaFile() {
-    // 삭제하려는 파일의 경로
-    String filePath = "webCompile.java";
 
-    File file = new File(filePath);
+    File file = new File(Constants.WEB_COMPILE_JAVA_FILE_PATH);
     try {
       if (file.delete()) {
         logger.debug(" info log = {}", "생성된 자바 파일이 성공적으로 삭제되었습니다.");
@@ -42,7 +41,7 @@ public class JavaCompileService {
   public boolean deleteClassFile() {
     String filePath = "webCompile.class";
 
-    File file = new File(filePath);
+    File file = new File(Constants.WEB_COMPILE_CLASS_FILE_PATH);
     try {
       if (file.delete()) {
         logger.debug(" info log = {}", "생성된 클래스 파일이 성공적으로 삭제되었습니다.");
@@ -60,8 +59,8 @@ public class JavaCompileService {
     String filePathClass = "webCompile.class";
     String filePathJava = "webCompile.java";
 
-    File fileClass = new File(filePathClass);
-    File fileJava = new File(filePathJava);
+    File fileClass = new File(Constants.WEB_COMPILE_CLASS_FILE_PATH);
+    File fileJava = new File(Constants.WEB_COMPILE_JAVA_FILE_PATH);
     try {
       if (fileClass.delete() || fileJava.delete()) {
         logger.debug(" info log = {}", "생성된 Class 파일이 성공적으로 삭제되었습니다.");
@@ -75,52 +74,54 @@ public class JavaCompileService {
     }
   }
 
-  public boolean changeJavaFilePermissions() {
+  public boolean changeJavaFilePermissions() throws Exception {
     try {
-      String filePath = "webCompile.java";
+
       // 변경할 권한 설정
       Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
 
       // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(filePath), perms);
-      System.out.println("Java 파일 권한 변경 성공");
+      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_JAVA_FILE_PATH), perms);
+      logger.debug("Java 파일 권한 변경 성공");
+
       return true;
     } catch (IOException e) {
       logger.error(e.getMessage());
-      System.out.println("Java 파일 권한 변경 실패");
+      logger.error("Java 파일 권한 변경 실패");
+
       return false;
     }
   }
 
-  public boolean changeClassFilePermissions() {
+  public boolean changeClassFilePermissions() throws Exception {
     try {
-      String filePath = "webCompile.class";
+
       // 변경할 권한 설정
       Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
 
       // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(filePath), perms);
+      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_CLASS_FILE_PATH), perms);
 
-      System.out.println("Class 파일 권한 변경 성공");
+      logger.debug("Class 파일 권한 변경 성공");
+
       return true;
     } catch (IOException e) {
       logger.error(e.getMessage());
-      System.out.println("Class 파일 권한 변경 실패");
+      logger.error("Class 파일 권한 변경 실패");
+
       return false;
     }
   }
 
   public boolean changeClassNJavaFilePermissions() throws Exception {
     try {
-      String filePathClass = "webCompile.class";
-      String filePathJava = "webCompile.java";
       // 변경할 권한 설정
       Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
 
       // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(filePathClass), perms);
+      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_CLASS_FILE_PATH), perms);
       logger.debug("Class 파일 권한 변경 성공");
-      Files.setPosixFilePermissions(Paths.get(filePathJava), perms);
+      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_JAVA_FILE_PATH), perms);
       logger.debug("Java 파일 권한 변경 성공");
 
       return true;
@@ -137,7 +138,7 @@ public class JavaCompileService {
     try {
       URLClassLoader classLoader =
           URLClassLoader.newInstance(new URL[] {new File(".").toURI().toURL()});
-      Class<?> cls = Class.forName("webCompile", true, classLoader);
+      Class<?> cls = Class.forName(Constants.WEB_COMPILE_FILE, true, classLoader);
 
       // 2. 인스턴스 생성
       Method mainMethod = cls.getDeclaredMethod("main", String[].class);

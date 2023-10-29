@@ -91,12 +91,18 @@ class CompileAPITest {
     }
 
     try {
-      assertTrue(javaCompileService.changeClassNJavaFilePermissions());
+      assertTrue (javaCompileService.changeJavaFilePermissions());
     } catch (Exception e) {
       e.printStackTrace();
       logger.error(e.getMessage());
     }
-    //
+
+    try {
+      assertTrue (javaCompileService.changeClassFilePermissions ());
+    } catch (Exception e) {
+      e.printStackTrace();
+      logger.error(e.getMessage());
+    }
 
     // 실행에 필요했던 파일들 삭제
     assertTrue(javaCompileService.deleteJavaFile());
