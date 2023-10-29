@@ -4,10 +4,8 @@ import com.every.everycodeacademy.board.Board;
 import com.every.everycodeacademy.board.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 
-
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

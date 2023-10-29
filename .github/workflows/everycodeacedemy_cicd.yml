@@ -9,7 +9,7 @@ jobs:
       env: 
          working-directory: ./everycodeacademy
          working-directory2: ./everycodeacademy
-         scounter.conf: ${{ secrets.SCOUTER_AGENT_JAVA_CONF }}
+         scounter-conf: ${{ secrets.SCOUTER_AGENT_JAVA_CONF }}
 
       steps:
         - uses: actions/checkout@v3
@@ -35,8 +35,9 @@ jobs:
 
         - name: copy scouter.conf
           working-directory: ${{ env.working-directory2 }}
-          run:            
-            echo " $env.scounter.conf " >> scounter.conf
+          run: |
+            touch scouter.conf
+            echo "${{env.scounter-conf}}" > scouter.conf
 
             
         
@@ -69,7 +70,7 @@ jobs:
               docker ps
               docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               docker stop everycodeacedemy
-              sudo docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               docker image prune -f
 
 
@@ -85,7 +86,7 @@ jobs:
               sudo docker ps
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               sudo docker stop everycodeacedemy
-              sudo docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               sudo docker image prune -f
 
         - name: Deploy to ec2-3
@@ -100,5 +101,5 @@ jobs:
               sudo docker ps
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
               sudo docker stop everycodeacedemy
-              sudo docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}}
+              sudo nohup docker run -d -p 8080:8080 --restart unless-stopped ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO}} &
               sudo docker image prune -f
