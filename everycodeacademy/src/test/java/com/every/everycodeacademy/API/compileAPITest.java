@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
+
 import com.every.everycodeacademy.constant.Constants;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,6 +40,7 @@ class CompileAPITest {
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
     String fileName = Constants.WEB_COMPILE_FILE;
+
     javaCompile.setParameterString("args");
 
     javaCompile.setJavaBodyString("good after noon");
@@ -51,6 +54,7 @@ class CompileAPITest {
             + javaCompile.getJavaBodyString()
             + "\""
             + "; }}");
+
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName+".java"))) {
       writer.write(javaCompile.getJavaFullCompile());
@@ -66,9 +70,9 @@ class CompileAPITest {
     try (StandardJavaFileManager fileManager =
         webCompiler.getStandardFileManager(null, null, null)) {
 
-
       // 컴파일할 파일 지정
       String[] compileArguments = {fileName + ".java"};
+
 
       // 컴파일 실행
       int compilationResult = webCompiler.run(null, null, null, compileArguments);
@@ -85,6 +89,7 @@ class CompileAPITest {
     try {
       assertNotNull(javaCompileService.runCompiledFile(fileName)); // 컴파일된 파일 실행
       logger.info(javaCompileService.runCompiledFile(fileName));
+
     } catch (Exception e) {
       logger.error("logger error = {}", "컴파일 실행 실패");
       logger.error("logger error = {}", e.getMessage());
@@ -93,6 +98,7 @@ class CompileAPITest {
 
     try {
       assertTrue (javaCompileService.changeFilePermissions(fileName+".java"));
+
     } catch (Exception e) {
       e.printStackTrace();
       logger.error(e.getMessage());

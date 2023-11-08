@@ -1,5 +1,6 @@
 package com.every.everycodeacademy.compile;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +31,7 @@ public class JavaCompileService {
         logger.debug(" info log = {}", "생성된 " + fileName + "파일이 성공적으로 삭제되었습니다.");
         return true;
         // logger.debug(" info log = {}", "생성된 Java 파일이 성공적으로 삭제되었습니다.");
+
       } else {
         throw new Exception("생성된 파일 삭제 실패");
       }
@@ -41,6 +43,7 @@ public class JavaCompileService {
   }
 
   public boolean changeFilePermissions(String fileName) throws Exception {
+
     try {
 
       // 변경할 권한 설정
@@ -53,11 +56,13 @@ public class JavaCompileService {
       return true;
     } catch (IOException e) {
       logger.error(e.getMessage());
+
       logger.error("{} 파일 권한 변경 실패", fileName);
 
       return false;
     }
   }
+
 
   public String runCompiledFile(String fileName)
       throws ClassNotFoundException, MalformedURLException {
@@ -65,7 +70,9 @@ public class JavaCompileService {
     try {
       URLClassLoader classLoader =
           URLClassLoader.newInstance(new URL[] {new File(".").toURI().toURL()});
+
       Class<?> cls = Class.forName(fileName, true, classLoader);
+
 
       // 2. 인스턴스 생성
       Method mainMethod = cls.getDeclaredMethod("main", String[].class);
@@ -73,6 +80,7 @@ public class JavaCompileService {
       result = mainMethod.invoke(null, (Object) new String[0]);
 
     } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+
       logger.debug("컴파일 실행 실패");
       return null;
     }
