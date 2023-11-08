@@ -1,7 +1,6 @@
 package com.every.everycodeacademy.compile;
 
-import com.every.everycodeacademy.constant.Constants;
-import java.io.File;
+록import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,9 +21,9 @@ public class JavaCompileService {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public boolean deleteJavaFile() {
+  public boolean deleteJavaFile(String fileName) {
 
-    File file = new File(Constants.WEB_COMPILE_JAVA_FILE_PATH);
+    File file = new File(fileName + ".java");
     try {
       if (file.delete()) {
         logger.debug(" info log = {}", "생성된 자바 파일이 성공적으로 삭제되었습니다.");
@@ -38,10 +37,10 @@ public class JavaCompileService {
     }
   }
 
-  public boolean deleteClassFile() {
+  public boolean deleteClassFile(String fileName) {
     String filePath = "webCompile.class";
 
-    File file = new File(Constants.WEB_COMPILE_CLASS_FILE_PATH);
+    File file = new File(fileName+ ".class");
     try {
       if (file.delete()) {
         logger.debug(" info log = {}", "생성된 클래스 파일이 성공적으로 삭제되었습니다.");
@@ -55,53 +54,56 @@ public class JavaCompileService {
     }
   }
 
-  public void deleteClassNJavaFile() {
-    String filePathClass = "webCompile.class";
-    String filePathJava = "webCompile.java";
+  public void deleteClassNJavaFile(String fileName) {
+   // String filePathClass = "webCompile.class";
+    //String filePathJava = "webCompile.java";
 
-    File fileClass = new File(Constants.WEB_COMPILE_CLASS_FILE_PATH);
-    File fileJava = new File(Constants.WEB_COMPILE_JAVA_FILE_PATH);
+    File fileClass = new File(fileName+ ".class");
+
     try {
-      if (fileClass.delete() || fileJava.delete()) {
+      if (fileClass.delete() ) {
         logger.debug(" info log = {}", "생성된 Class 파일이 성공적으로 삭제되었습니다.");
-        logger.debug(" info log = {}", "생성된 Java 파일이 성공적으로 삭제되었습니다.");
+        //logger.debug(" info log = {}", "생성된 Java 파일이 성공적으로 삭제되었습니다.");
+      } else {
+        throw new Exception("생성된 class 파일 삭제 실패");
+      }
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+      logger.error(" info log = {}", "생성된 class 파일 삭제 실패");
+    }
+  }
+
+  public boolean deleteFile(String fileName) {
+    // String filePathClass = "webCompile.class";
+    //String filePathJava = "webCompile.java";
+
+    File fileClass = new File(fileName);
+
+    try {
+      if (fileClass.delete() ) {
+        logger.debug(" info log = {}", "생성된 "+ fileName +"파일이 성공적으로 삭제되었습니다.");
+        return true;
+        //logger.debug(" info log = {}", "생성된 Java 파일이 성공적으로 삭제되었습니다.");
       } else {
         throw new Exception("생성된 파일 삭제 실패");
       }
     } catch (Exception e) {
       logger.error(e.getMessage());
-      logger.error(" info log = {}", "생성된 파일 삭제 실패");
-    }
-  }
-
-  public boolean changeJavaFilePermissions() throws Exception {
-    try {
-
-      // 변경할 권한 설정
-      Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
-
-      // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_JAVA_FILE_PATH), perms);
-      logger.debug("Java 파일 권한 변경 성공");
-
-      return true;
-    } catch (IOException e) {
-      logger.error(e.getMessage());
-      logger.error("Java 파일 권한 변경 실패");
-
+      logger.error(" info log = {}", "생성된 "+ fileName +"파일 삭제 실패");
       return false;
     }
   }
 
-  public boolean changeClassFilePermissions() throws Exception {
+  public boolean changeClassFilePermissions(String fileName) throws Exception {
     try {
 
       // 변경할 권한 설정
       Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
 
       // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_CLASS_FILE_PATH), perms);
-
+//      Files.setPosixFilePermissions(Paths.get(filename + ".java"), perms);
+//      logger.debug("Java 파일 권한 변경 성공");
+      Files.setPosixFilePermissions(Paths.get(fileName + ".class"), perms);
       logger.debug("Class 파일 권한 변경 성공");
 
       return true;
@@ -113,32 +115,73 @@ public class JavaCompileService {
     }
   }
 
-  public boolean changeClassNJavaFilePermissions() throws Exception {
+  public boolean changeJavaFilePermissions(String fileName) throws Exception {
     try {
+
       // 변경할 권한 설정
       Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
 
       // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_CLASS_FILE_PATH), perms);
+//      Files.setPosixFilePermissions(Paths.get(filename + ".java"), perms);
+//      logger.debug("Java 파일 권한 변경 성공");
+      Files.setPosixFilePermissions(Paths.get(fileName + ".java"), perms);
       logger.debug("Class 파일 권한 변경 성공");
-      Files.setPosixFilePermissions(Paths.get(Constants.WEB_COMPILE_JAVA_FILE_PATH), perms);
-      logger.debug("Java 파일 권한 변경 성공");
 
       return true;
     } catch (IOException e) {
       logger.error(e.getMessage());
-      logger.error("파일 권한 변경 실패");
+      logger.error("Class 파일 권한 변경 실패");
+
+      return false;
+    }
+  }
+  public boolean changeFilePermissions(String fileName) throws Exception {
+    try {
+
+      // 변경할 권한 설정
+      Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+
+      // 권한 변경
+//      Files.setPosixFilePermissions(Paths.get(filename + ".java"), perms);
+//      logger.debug("Java 파일 권한 변경 성공");
+      Files.setPosixFilePermissions(Paths.get(fileName), perms);
+      logger.debug("{} 파일 권한 변경 성공",fileName);
+
+      return true;
+    } catch (IOException e) {
+      logger.error(e.getMessage());
+      logger.error("{} 파일 권한 변경 실패",fileName);
 
       return false;
     }
   }
 
-  public String runCompiledFile() throws ClassNotFoundException, MalformedURLException {
+//  public boolean changeClassNJavaFilePermissions(filename) throws Exception {
+//    try {
+//      // 변경할 권한 설정
+//      Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+//
+//      // 권한 변경
+//      Files.setPosixFilePermissions(Paths.get(filename), perms);
+//      logger.debug("Class 파일 권한 변경 성공");
+//      Files.setPosixFilePermissions(Paths.get(filename), perms);
+//      logger.debug("Java 파일 권한 변경 성공");
+//
+//      return true;
+//    } catch (IOException e) {
+//      logger.error(e.getMessage());
+//      logger.error("파일 권한 변경 실패");
+//
+//      return false;
+//    }
+//  }
+
+  public String runCompiledFile(String fileName) throws ClassNotFoundException, MalformedURLException {
     Object result = new Object();
     try {
       URLClassLoader classLoader =
           URLClassLoader.newInstance(new URL[] {new File(".").toURI().toURL()});
-      Class<?> cls = Class.forName(Constants.WEB_COMPILE_FILE, true, classLoader);
+      Class<?> cls = Class.forName(fileName, true, classLoader);
 
       // 2. 인스턴스 생성
       Method mainMethod = cls.getDeclaredMethod("main", String[].class);
@@ -146,10 +189,10 @@ public class JavaCompileService {
       result = mainMethod.invoke(null, (Object) new String[0]);
 
     } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-      logger.debug("컴파일 실패");
+      logger.debug("컴파일 실행 실패");
       return null;
     }
-    logger.debug("컴파일 성공");
+    logger.debug("컴파일 실행 성공");
     return result.toString();
   }
 }
