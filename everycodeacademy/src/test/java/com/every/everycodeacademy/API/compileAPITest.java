@@ -92,21 +92,21 @@ class CompileAPITest {
     }
 
     try {
-      assertTrue (javaCompileService.changeFilePermissions(fileName+".java"));
+      assertTrue (javaCompileService.changeFilePermissions(fileName, ".java"));
     } catch (Exception e) {
       e.printStackTrace();
       logger.error(e.getMessage());
     }
 
     try {
-      assertTrue (javaCompileService.changeFilePermissions (fileName+".class"));
+      assertTrue (javaCompileService.changeFilePermissions (fileName, ".class"));
     } catch (Exception e) {
       e.printStackTrace();
       logger.error(e.getMessage());
     }
 
     // 실행에 필요했던 파일들 삭제
-    assertTrue (javaCompileService.deleteFile(fileName+".java"));
-    assertTrue(javaCompileService.deleteFile(fileName+".class"));
+    assertTrue (javaCompileService.deleteFile(fileName, ".java"));
+    assertTrue(javaCompileService.deleteFile(fileName, ".class"));
   }
 }

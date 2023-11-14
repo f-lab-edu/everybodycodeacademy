@@ -21,39 +21,41 @@ public class JavaCompileService {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public boolean deleteFile(String fileName) {
+  public boolean deleteFile(String fileName, String extension) {
+    String fileNameNClass = fileName + extension;
+    File fileClass = new File(fileNameNClass);
 
-    File fileClass = new File(fileName);
 
     try {
       if (fileClass.delete()) {
-        logger.debug(" info log = {}", "생성된 " + fileName + "파일이 성공적으로 삭제되었습니다.");
+        logger.debug(" info log = {}", "생성된 " + fileNameNClass + "파일이 성공적으로 삭제되었습니다.");
         return true;
         // logger.debug(" info log = {}", "생성된 Java 파일이 성공적으로 삭제되었습니다.");
       } else {
         throw new Exception("생성된 파일 삭제 실패");
       }
     } catch (Exception e) {
-      logger.error(e.getMessage());
-      logger.error(" info log = {}", "생성된 " + fileName + "파일 삭제 실패");
+      logger.error("{} 파일 삭제 실패. 오류: {}", fileNameNClass, e.getMessage());
+
       return false;
     }
   }
 
-  public boolean changeFilePermissions(String fileName) throws Exception {
+  public boolean changeFilePermissions(String fileName, String extension) throws Exception {
+    String fileNameNclass = fileName + extension;
+
     try {
 
       // 변경할 권한 설정
       Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
 
       // 권한 변경
-      Files.setPosixFilePermissions(Paths.get(fileName), perms);
-      logger.debug("{} 파일 권한 변경 성공", fileName);
+      Files.setPosixFilePermissions(Paths.get(fileNameNclass), perms);
+      logger.debug("{} 파일 권한 변경 성공", fileNameNclass);
 
       return true;
     } catch (IOException e) {
-      logger.error(e.getMessage());
-      logger.error("{} 파일 권한 변경 실패", fileName);
+      logger.error("{} 파일 권한 변경 실패. 오류: {}", fileNameNclass, e.getMessage());
 
       return false;
     }

@@ -87,13 +87,13 @@ public class CompileAPI {
     }
 
     try {
-      javaCompileService.changeFilePermissions(fileName+".java");
+      javaCompileService.changeFilePermissions(fileName, ".java");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
 
     try {
-      javaCompileService.changeFilePermissions(fileName+".class");
+      javaCompileService.changeFilePermissions(fileName, ".class");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
@@ -101,13 +101,13 @@ public class CompileAPI {
 
     // 실행에 필요했던 파일들 삭제
     try {
-      javaCompileService.deleteFile(fileName+".java");
+      javaCompileService.deleteFile(fileName, ".java");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
 
     try {
-      javaCompileService.deleteFile(fileName+".class");
+      javaCompileService.deleteFile(fileName, ".class");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
