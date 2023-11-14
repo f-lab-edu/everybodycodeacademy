@@ -4,10 +4,12 @@ import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
 import com.every.everycodeacademy.constant.Constants;
 import java.io.BufferedWriter;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Arrays;
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
@@ -32,9 +34,8 @@ public class CompileAPI {
   public void getJavaStringToCompile(@RequestBody JavaCompile javaCompile) {
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
-    String fileName = Constants.WEB_COMPILE_FILE;
-//
 
+    String fileName = Constants.WEB_COMPILE_FILE;
 
     javaCompile.setJavaFullCompile(
         "public class webCompile { public static String main(String[] "
@@ -44,6 +45,7 @@ public class CompileAPI {
             + javaCompile.getJavaBodyString()
             + "\""
             + "; }}");
+
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".java"))) {
       writer.write(javaCompile.getJavaFullCompile());
@@ -55,6 +57,7 @@ public class CompileAPI {
     // 3. 컴파일 옵션 설정
     Iterable<String> options = Arrays.asList("-d", "compiled");
 
+
     InputStream inputStream =
         new ByteArrayInputStream(javaCompile.getJavaFullCompile().getBytes());
 
@@ -63,6 +66,7 @@ public class CompileAPI {
         webCompiler.getStandardFileManager(null, null, null)) {
 
       // 컴파일할 파일 지정
+
       String[] compileArguments = {fileName + ".java"};
 
       // 컴파일 실행
@@ -78,6 +82,7 @@ public class CompileAPI {
     }
 
     try {
+
       //javaCompileService.runCompiledFile(fileName); // 컴파일된 파일 실행
       logger.info(javaCompileService.runCompiledFile(fileName));
     } catch (Exception e) {

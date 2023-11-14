@@ -13,6 +13,7 @@ public class ConcurrencyServiceImpl implements ConcurrencyService {
 
 
   //동시성 문제 해결한 테스트 코드1
+
   @Override
   public synchronized void incrementCount(Long value) {
 
@@ -90,3 +91,4 @@ public class ConcurrencyServiceImpl implements ConcurrencyService {
  // }
 *
 * */
+
