@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
+import com.every.everycodeacademy.constant.Constants;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,7 +37,7 @@ class CompileAPITest {
   void getJavaStringToCompileTest() {
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
-    String filePath = "webCompile.java";
+    String fileName = Constants.WEB_COMPILE_FILE;
     javaCompile.setParameterString("args");
 
     javaCompile.setJavaBodyString("good after noon");
@@ -51,9 +52,9 @@ class CompileAPITest {
             + "\""
             + "; }}");
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName+".java"))) {
       writer.write(javaCompile.getJavaFullCompile());
-      System.out.println("소스 코드가 " + filePath + "에 저장되었습니다.");
+      System.out.println("소스 코드가 " + fileName + ".java에 저장되었습니다.");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -64,10 +65,10 @@ class CompileAPITest {
     // 4. 컴파일 수행
     try (StandardJavaFileManager fileManager =
         webCompiler.getStandardFileManager(null, null, null)) {
-      String fileName = "webCompile.java";
+
 
       // 컴파일할 파일 지정
-      String[] compileArguments = {fileName};
+      String[] compileArguments = {fileName + ".java"};
 
       // 컴파일 실행
       int compilationResult = webCompiler.run(null, null, null, compileArguments);
@@ -82,8 +83,8 @@ class CompileAPITest {
     }
 
     try {
-      assertNotNull(javaCompileService.runCompiledFile()); // 컴파일된 파일 실행
-      logger.info(javaCompileService.runCompiledFile());
+      assertNotNull(javaCompileService.runCompiledFile(fileName)); // 컴파일된 파일 실행
+      logger.info(javaCompileService.runCompiledFile(fileName));
     } catch (Exception e) {
       logger.error("logger error = {}", "컴파일 실행 실패");
       logger.error("logger error = {}", e.getMessage());
@@ -91,21 +92,21 @@ class CompileAPITest {
     }
 
     try {
-      assertTrue (javaCompileService.changeJavaFilePermissions());
+      assertTrue (javaCompileService.changeFilePermissions(fileName, ".java"));
     } catch (Exception e) {
       e.printStackTrace();
       logger.error(e.getMessage());
     }
 
     try {
-      assertTrue (javaCompileService.changeClassFilePermissions ());
+      assertTrue (javaCompileService.changeFilePermissions (fileName, ".class"));
     } catch (Exception e) {
       e.printStackTrace();
       logger.error(e.getMessage());
     }
 
     // 실행에 필요했던 파일들 삭제
-    assertTrue(javaCompileService.deleteJavaFile());
-    assertTrue(javaCompileService.deleteClassFile());
+    assertTrue (javaCompileService.deleteFile(fileName, ".java"));
+    assertTrue(javaCompileService.deleteFile(fileName, ".class"));
   }
 }

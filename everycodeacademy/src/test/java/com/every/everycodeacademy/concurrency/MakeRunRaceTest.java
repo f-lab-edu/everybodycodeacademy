@@ -24,8 +24,10 @@ public class MakeRunRaceTest {
     concurrency.setId(1L);
     concurrency.setCount(0L);
     concurrencyRepository.save(concurrency);
-    // 동시에 실행할 스레드 수
-    int numberOfThreads = 200;
+
+    // 동시에 실행할 스레드 수z
+    int numberOfThreads = 250;
+
 
     // CountDownLatch를 사용하여 모든 스레드가 동시에 시작되도록 함
     CountDownLatch latch = new CountDownLatch(1);

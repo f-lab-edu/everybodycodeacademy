@@ -4,8 +4,12 @@ import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
 import com.every.everycodeacademy.constant.Constants;
 import java.io.BufferedWriter;
+
+import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.Arrays;
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
@@ -30,6 +34,9 @@ public class CompileAPI {
   public void getJavaStringToCompile(@RequestBody JavaCompile javaCompile) {
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
+
+    String fileName = Constants.WEB_COMPILE_FILE;
+
     javaCompile.setJavaFullCompile(
         "public class webCompile { public static String main(String[] "
             + javaCompile.getParameterString()
@@ -39,10 +46,10 @@ public class CompileAPI {
             + "\""
             + "; }}");
 
-    try (BufferedWriter writer =
-        new BufferedWriter(new FileWriter(Constants.WEB_COMPILE_JAVA_FILE_PATH))) {
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".java"))) {
       writer.write(javaCompile.getJavaFullCompile());
-      System.out.println("소스 코드가 " + Constants.WEB_COMPILE_JAVA_FILE_PATH + "에 저장되었습니다.");
+      logger.info("소스 코드가   {}.java에 저장되었습니다.",fileName);
     } catch (IOException e) {
       logger.error(e.getMessage());
     }
@@ -50,12 +57,17 @@ public class CompileAPI {
     // 3. 컴파일 옵션 설정
     Iterable<String> options = Arrays.asList("-d", "compiled");
 
+
+    InputStream inputStream =
+        new ByteArrayInputStream(javaCompile.getJavaFullCompile().getBytes());
+
     // 4. 컴파일 수행
     try (StandardJavaFileManager fileManager =
         webCompiler.getStandardFileManager(null, null, null)) {
 
       // 컴파일할 파일 지정
-      String[] compileArguments = {Constants.WEB_COMPILE_JAVA_FILE_PATH};
+
+      String[] compileArguments = {fileName + ".java"};
 
       // 컴파일 실행
       int compilationResult = webCompiler.run(null, null, null, compileArguments);
@@ -70,8 +82,9 @@ public class CompileAPI {
     }
 
     try {
-      javaCompileService.runCompiledFile(); // 컴파일된 파일 실행
-      logger.info(javaCompileService.runCompiledFile());
+
+      //javaCompileService.runCompiledFile(fileName); // 컴파일된 파일 실행
+      logger.info(javaCompileService.runCompiledFile(fileName));
     } catch (Exception e) {
       logger.error("logger error = {}", "컴파일 실행 실패");
       logger.error("logger error = {}", e.getMessage());
@@ -79,13 +92,13 @@ public class CompileAPI {
     }
 
     try {
-      javaCompileService.changeJavaFilePermissions();
+      javaCompileService.changeFilePermissions(fileName, ".java");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
 
     try {
-      javaCompileService.changeClassFilePermissions();
+      javaCompileService.changeFilePermissions(fileName, ".class");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
@@ -93,13 +106,13 @@ public class CompileAPI {
 
     // 실행에 필요했던 파일들 삭제
     try {
-      javaCompileService.deleteJavaFile();
+      javaCompileService.deleteFile(fileName, ".java");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
 
     try {
-      javaCompileService.deleteClassFile();
+      javaCompileService.deleteFile(fileName, ".class");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
