@@ -4,12 +4,10 @@ import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
 import com.every.everycodeacademy.constant.Constants;
 import java.io.BufferedWriter;
-
 import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Arrays;
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
@@ -18,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,22 +29,11 @@ public class CompileAPI {
 
   @Autowired JavaCompileService javaCompileService;
 
-  @RequestMapping("/java")
-  public void getJavaStringToCompile(@RequestBody JavaCompile javaCompile) {
+  @PostMapping(path = "/java")
+  public void getJavaStringToCompile(@ModelAttribute JavaCompile javaCompile) {
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
 
-
     String fileName = Constants.WEB_COMPILE_FILE;
-
-    javaCompile.setJavaFullCompile(
-        "public class webCompile { public static String main(String[] "
-            + javaCompile.getParameterString()
-            + ") { return "
-            + " \""
-            + javaCompile.getJavaBodyString()
-            + "\""
-            + "; }}");
-
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".java"))) {
       writer.write(javaCompile.getJavaFullCompile());
@@ -82,8 +70,6 @@ public class CompileAPI {
     }
 
     try {
-
-      //javaCompileService.runCompiledFile(fileName); // 컴파일된 파일 실행
       logger.info(javaCompileService.runCompiledFile(fileName));
     } catch (Exception e) {
       logger.error("logger error = {}", "컴파일 실행 실패");
