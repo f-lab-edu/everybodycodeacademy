@@ -4,10 +4,12 @@ import com.every.everycodeacademy.compile.JavaCompile;
 import com.every.everycodeacademy.compile.JavaCompileService;
 import com.every.everycodeacademy.constant.Constants;
 import java.io.BufferedWriter;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Arrays;
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
@@ -32,6 +34,7 @@ public class CompileAPI {
   @PostMapping(path = "/java")
   public void getJavaStringToCompile(@ModelAttribute JavaCompile javaCompile) {
     JavaCompiler webCompiler = ToolProvider.getSystemJavaCompiler();
+
 
     String fileName = Constants.WEB_COMPILE_FILE;
 
