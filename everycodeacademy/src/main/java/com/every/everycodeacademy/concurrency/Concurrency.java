@@ -11,5 +11,6 @@ import lombok.Setter;
 public class Concurrency {
 
   @Id private Long id;
+
   private Long count;
 }
