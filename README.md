@@ -13,4 +13,4 @@
 ![화면 캡처 2023-09-25 040827](https://github.com/f-lab-edu/everybodycodeacademy/assets/56420135/032bc6d3-6499-49e9-8944-058f83d25f4f)
 
 *** 
-추후 도입 계획: CI/CD, 분산 처리
+추후 도입 계획: 분산 처리
