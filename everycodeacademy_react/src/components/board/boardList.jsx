@@ -40,7 +40,7 @@ const BoardList = () => {
         </thead>
         <tbody>
         {boards.map((board, index) => (
-            <tr key={board.idx} ><Link to="/board/view/${board.idx}"> </Link>
+            <tr key={board.idx} ><Link to="/board/detail/${board.idx}"> </Link>
               <td>{index + 1} </td>
               <td><Link to={`/board/view/${board.idx}`} > {board.title}</Link></td>
               <td>{board.writername}</td>
