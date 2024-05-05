@@ -2,6 +2,7 @@ package com.every.everycodeacademy.API;
 
 import com.every.everycodeacademy.board.Board;
 import com.every.everycodeacademy.board.BoardService;
+import com.every.everycodeacademy.board.View;
 import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
@@ -27,10 +28,11 @@ public class BoardAPI {
     return boardService.list();
   }
 
-  @GetMapping("/detail/{idx}")
+  @GetMapping("/view/{idx}")
   @Operation(summary = "detail a view")
-  public Board detail(@PathVariable int idx) {
-    return boardService.detail(idx);
+  public View detail(@PathVariable int idx) {
+    Board board = boardService.detail(idx);
+    return new View(board); // View 객체를 생성하여 반환
   }
 
   @PostMapping("/register")
