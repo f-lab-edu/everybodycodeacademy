@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.4
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: kyjtester
+      MYSQL_DATABASE: everycodeacademy
+      MYSQL_USER: kyjtester1
+      MYSQL_PASSWORD: test4321
+    ports:
+      - "3306:3306"                        # 호스트:컨테이너 포트 매핑
+    volumes:
+      - db_data:/var/lib/mysql             # 데이터 영속성을 위한 볼륨
+
+volumes:
+  db_data:
