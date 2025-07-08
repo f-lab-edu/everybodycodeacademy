@@ -7,6 +7,7 @@ plugins {
 
 dependencies {
     implementation(project(":common"))
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.2.5")
 }
 
 tasks.withType<Test> {

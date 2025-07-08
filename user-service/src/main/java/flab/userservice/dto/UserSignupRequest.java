@@ -1,6 +1,8 @@
 package flab.userservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,14 +16,14 @@ public record UserSignupRequest(
         @NotBlank @Size(min = 8)
         String password,
 
-        @NotBlank @Pattern(regexp = "^\\d{10,11}$")
+        @Pattern(regexp = "^\\d{10,11}$")
         String phoneNumber,
 
         @Size(max = 100)
         String address,
 
-        @Past
-        LocalDate birthDate,
+        @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜 형식은 yyyy-MM-dd 여야 합니다.")
+        String birthDate,
 
         @Pattern(regexp = "^(MALE|FEMALE)$")
         String gender,
