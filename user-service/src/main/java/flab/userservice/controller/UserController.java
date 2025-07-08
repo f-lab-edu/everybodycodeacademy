@@ -17,23 +17,6 @@ import flab.common.api.ApiResponse;
 @RequestMapping("/users")
 public class UserController {
 
-    /*
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-    */
-
-    /*
-
-    private final userDTO.java userDTO.java;
-
-    public UserController(UserDTO userDTO.java){
-        this.userDTO.java = userDTO.java;
-    }
-
-    */
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
