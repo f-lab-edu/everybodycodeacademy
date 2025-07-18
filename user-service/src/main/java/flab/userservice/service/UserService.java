@@ -49,4 +49,12 @@ public class UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public void userSignUp(UserSignupRequest request) {
+        if(userRepository.existsByEmail(request.email())){
+            userSignUp(request);
+        }else{
+            throw new IllegalArgumentException("이미 존재하는 이메일입니다: " + request.email());
+        }
+    }
 }

@@ -14,6 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-gradle-plugin:3.5.0")
-    implementation("io.spring.gradle:dependency-management-plugin:1.1.7")
+    implementation(project(":common"))
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation ("com.mysql:mysql-connector-j")
 }

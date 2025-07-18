@@ -31,36 +31,16 @@ public class UserController {
     public ResponseEntity<Object> signup(@RequestBody UserSignupRequest request) {
 
 
-        try{
 
-                if(userService.existsByEmail(request.email())){
-                    log.info("회원가입 실패(중복 이메일)");
-                    HttpHeaders headers = new HttpHeaders();
-                    ApiResponse response = new ApiResponse("User registration failed", 209);
-                    headers.add("Message", response.getMessage());
-                    headers.add("Status", String.valueOf(response.getStatus()));
+        userService.userSignUp(request);
 
-                    return new ResponseEntity<>(response, headers, HttpStatus.CONFLICT);
-                }
-                else{
-                    userService.create(request);
-                    log.info("회원가입 성공");
-                    HttpHeaders headers = new HttpHeaders();
-                    ApiResponse response = new ApiResponse("User registration success", 201);
-                    headers.add("Message", response.getMessage().toString());
-                    headers.add("Status", String.valueOf(response.getStatus()));
+        HttpHeaders headers = new HttpHeaders();
+        ApiResponse response = new ApiResponse("회원가입 성공", 201);
+        headers.add("Message", response.getMessage());
+        headers.add("Status", String.valueOf(response.getStatus()));
+        log.info("회원가입 성공");
 
-                    return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
-                }
-        }catch(Exception exception){
-            log.error("서버 에러");
-            HttpHeaders headers = new HttpHeaders();
-            ApiResponse response = new ApiResponse("Server Internal Error", 500);
-            headers.add("Message", response.getMessage());
-            headers.add("Status", String.valueOf(response.getStatus()));
-
-            return new ResponseEntity<>(response, headers, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
 
     }
 
