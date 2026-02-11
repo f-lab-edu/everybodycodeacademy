@@ -12,7 +12,8 @@
 ```
 
 ## Backend
-- Spring Boot `3.3.5`
+- Spring Boot `3.5.0`
+
 - 기본 엔드포인트: `GET /api/health`
 - DB: PostgreSQL 16 연결 설정 (`application.yml`에서 환경변수 기반)
 - Dockerfile 포함
