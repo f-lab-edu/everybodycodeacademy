@@ -37,5 +37,5 @@ jobs:
           test -f frontend/index.html
           test -f frontend/src/app.jsx
           test -f frontend/src/styles.css
-          rg -n "unpkg.com/react@18" frontend/index.html
-          rg -n "ReactDOM.createRoot" frontend/src/app.jsx
+          grep -n "unpkg.com/react@18" frontend/index.html
+          grep -n "ReactDOM.createRoot" frontend/src/app.jsx
