@@ -34,3 +34,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+backend/.gradle/
+.env
+*.env.local

@@ -1,0 +1,30 @@
+:root {
+  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 760px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+  margin-top: 0;
+  color: #1d4ed8;
+}
+
+.api-status {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #eff6ff;
+}
