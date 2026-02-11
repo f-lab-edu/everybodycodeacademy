@@ -9,6 +9,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "everybodycodeacademy"
+rootProject.name = "everycodeacademy"
 
 include("user-service","content-service","community-service","code-review-service","common","database")
