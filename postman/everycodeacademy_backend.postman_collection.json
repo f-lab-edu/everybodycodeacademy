@@ -1,0 +1,42 @@
+{
+  "info": {
+    "name": "EveryCodeAcademy Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "url": "{{baseUrl}}/api/users/signup",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin_user\",\n  \"email\": \"admin@everycodeacademy.com\",\n  \"password\": \"securePassword123\",\n  \"phoneNumber\": \"01012345678\",\n  \"address\": \"Seoul\",\n  \"birthDate\": \"1995-01-01\",\n  \"gender\": \"MALE\",\n  \"nickname\": \"admin\",\n  \"loginProvider\": \"LOCAL\",\n  \"providerId\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "url": "{{baseUrl}}/api/users/login",
+        "body": {"mode":"raw","raw":"{\n  \"email\": \"admin@everycodeacademy.com\",\n  \"password\": \"securePassword123\"\n}"}
+      }
+    },
+    {
+      "name": "AI Feedback",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "url": "{{baseUrl}}/api/code-reviews/submissions/{{submissionId}}/ai-feedback",
+        "body": {"mode":"raw","raw":"{\n  \"focus\": \"time complexity and edge cases\"\n}"}
+      }
+    }
+  ],
+  "variable": [
+    {"key":"baseUrl","value":"http://localhost:8080"},
+    {"key":"submissionId","value":"1"}
+  ]
+}

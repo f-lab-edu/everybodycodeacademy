@@ -3,12 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-    plugins {
-        id("org.springframework.boot") version "3.5.0"
-        id("io.spring.dependency-management") version "1.1.7"
-    }
 }
 
 rootProject.name = "everycodeacademy"
-
-include("user-service","content-service","community-service","code-review-service","common","database")
+include("backend")

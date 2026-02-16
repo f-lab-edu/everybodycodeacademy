@@ -8,3 +8,21 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+security:
+  jwt:
+    secret: test-secret-key-with-at-least-32-characters-12345
+    access-expiration-millis: 3600000
+    refresh-expiration-millis: 1209600000
+  bootstrap-admin-email: admin@everycodeacademy.com
+
+openai:
+  api-key: test
+  model: gpt-4o-mini
+  base-url: https://api.openai.com/v1
